@@ -3,10 +3,12 @@ import Button from "../components/Button"
 import Input from "../components/Input"
 import { Link } from "react-router-dom"
 import { api } from "../api/api"
+import { useUserStore } from "../store/useUserStore"
+
 
 const SignIn = () => {
     const [error, setError] = useState("")
-
+    const setSession = useUserStore(state => state.setSession)
     const handleSubmit = async (e) => {
         e.preventDefault()
         setError("")
@@ -18,7 +20,7 @@ const SignIn = () => {
 
         try {
             const res = await api.loginUser(user)
-            console.log(res)
+            setSession(res.data)
         } catch (error) {
             console.error(error)
             setError(error.response.data.error)
