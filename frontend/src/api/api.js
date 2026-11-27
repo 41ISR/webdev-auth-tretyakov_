@@ -31,12 +31,6 @@ const createMessage = async (message) => {
     return res
 }
 
-const apiInstance = axios.create({ baseURL: BASE_URL,
-    headers: {
-        "Content-Type": "application/json"
-    }
-})
-
 apiInstance.interceptors.request.use((config) => {
     const {session} = useUserStore.getState()
 

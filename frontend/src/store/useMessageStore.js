@@ -6,5 +6,9 @@ export const useMessageStore = create((set) => ({
     getMessages: async () => {
         const res = await api.getMessages()
         set({messages: res.data})
+    },
+    createMessage: async (message) => {
+        const res = await api.createMessage(message)
+        set((state) => ({message: [...state.messages, res.data]}))
     }
 }))
