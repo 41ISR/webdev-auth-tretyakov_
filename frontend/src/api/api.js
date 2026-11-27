@@ -48,5 +48,6 @@ export const api = {
     registerUser,
     loginUser,
     getMessages,
-    createMessage
+    createMessage,
+    deleteMessage
 }
