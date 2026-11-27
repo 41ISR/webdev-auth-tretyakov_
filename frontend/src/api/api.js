@@ -31,6 +31,11 @@ const createMessage = async (message) => {
     return res
 }
 
+const deleteMessage = async (id) => {
+    const res = await apiInstance.delete(`messages/${id}`)
+    return res
+}
+
 apiInstance.interceptors.request.use((config) => {
     const {session} = useUserStore.getState()
 

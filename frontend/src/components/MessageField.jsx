@@ -1,16 +1,20 @@
 import { api } from '../api/api'
+import { useMessageStore } from '../store/useMessageStore'
 import Button from './Button'
 import TextArea from './TextArea'
 
 const MessageField = () => {
+    const getMessages = useMessageStore(state => state.getMessages)
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        if (e.target.content.value.trim().lenght === 0) return
         const message = {
             content: e.target.content.value
         }
-
         try{
             await api.createMessage(message)
+            await getMessages()
         } catch(error) {
             console.error(error)
         }
