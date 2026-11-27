@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")).render(
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<Board />} />
-                    <Route path="my-messages" element={<MyMessages />} />
+                    <Route path="my-messages" element={<AuthGuard><MyMessages /></AuthGuard>} />
                     <Route path="signin" element={<SignIn />} />
                     <Route path="signup" element={<SignUp />} />
                 </Route>

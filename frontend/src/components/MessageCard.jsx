@@ -2,7 +2,7 @@ import { api } from "../api/api"
 import { useMessageStore } from "../store/useMessageStore"
 import { useUserStore } from "../store/useUserStore"
 
-const MessageCard = ({ likes, content, username, createdAt, userId }) => {
+const MessageCard = ({id, likes, likedBy, content, username, createdAt, userId, onReport }) => {
     const session = useUserStore((state) => state.session)
     const getMessages = useMessageStore(state => state.getMessages)
 
@@ -15,10 +15,20 @@ const MessageCard = ({ likes, content, username, createdAt, userId }) => {
         }
     }
     const handleLike = async () => {
-
+        try{
+            await api.likeMessage(id)
+            await getMessages()
+        } catch(error) {
+            console.error(error)
+        }
     }
     const handleReport = async () => {
-
+        try {
+            await api.reportMessage(id)
+            await getMessages()
+        } catch(error) {
+            console.error(error)
+        }
     }
     return (
         <div className="message-card">
@@ -28,16 +38,16 @@ const MessageCard = ({ likes, content, username, createdAt, userId }) => {
                 <span className="message-time">{createdAt}</span>
             </div>
             <div className="message-actions">
-                <button className="action-button">
-                    <span>{likes} 💗🤍</span>
+                <button className="action-button" onClick={handleLike} >
+                    <span>{likes} {likedBy.includes(session?.user.id) ? "💗" : "🤍"} </span>
                     <span>Нравится</span>
                 </button>
-                <button className="action-button">
+                <button className="action-button" onClick={handleReport}>
                     <span>🚩</span>
                     <span>Пожаловаться</span>
                 </button>
                 {userId === session?.user.id && 
-                    <button className="action-button delete">
+                    <button onClick={handleDelete} className="action-button delete">
                         <span>❌</span>
                         <span>Удалить</span>
                     </button>

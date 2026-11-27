@@ -36,6 +36,16 @@ const deleteMessage = async (id) => {
     return res
 }
 
+const reportMessage = async (id)  => {
+    const res = await apiInstance.post(`messages/${id}/report`)
+    return res
+}
+
+const likeMessage = async (id) => {
+    const res = await apiInstance.post(`messages/${id}/like`)
+    return res
+}
+
 apiInstance.interceptors.request.use((config) => {
     const {session} = useUserStore.getState()
 
@@ -49,5 +59,7 @@ export const api = {
     loginUser,
     getMessages,
     createMessage,
-    deleteMessage
+    deleteMessage,
+    reportMessage,
+    likeMessage
 }
